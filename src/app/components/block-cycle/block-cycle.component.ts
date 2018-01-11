@@ -13,7 +13,7 @@ export class BlockCycleComponent implements OnInit {
   title: string;
   subtitle: string;
   page2 = 1;
-  results: any;
+  blockCycles: any;
 
   constructor(private http: HttpClient) {
     this.title = "Blank Page title";
@@ -24,6 +24,12 @@ export class BlockCycleComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    $('#datepicker-autoclose').datepicker({
+      autoclose: true,
+      todayHighlight: true
+  });
+
     
     setTimeout(() => {
       $(".footable").footable();
@@ -31,8 +37,8 @@ export class BlockCycleComponent implements OnInit {
     
 
     this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Get').subscribe(data => {
-      this.results = data;
-      console.log(this.results);
+      this.blockCycles = data;
+      console.log(this.blockCycles);
     });
 
   }
