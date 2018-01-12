@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { FUNCTION_TYPE } from '@angular/compiler/src/output/output_ast';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Headers, Http, RequestOptions } from '@angular/http';
 
 declare let $;
 
@@ -17,18 +17,41 @@ export class AddBlockCycleComponent implements OnInit {
     tempArr = [];
     blocksArray = [];
     checkedArray = [];
+    tempCheckedArray = [];
     date;
+    body;
     constructor(private http: HttpClient) {
 
     }
-    
+
     sendData() {
-
         for (let i = 0; i < this.checkedArray.length; ++i) {
-            let tempValue = this.blocksArray.filter(
-                data => data.blockId === this.checkedArray[i].blockId);
+            this.body = {
+                blockCycleId: this.checkedArray[i].blockCycleId,
+                blockId: this.checkedArray[i].blockId,
+                startDate: this.checkedArray[i].startDate,
 
-            console.log(tempValue);
+            }
+
+            let headers = new HttpHeaders().set("Content-Type", "application/json; charset=utf-8")
+                .set("Accept", "application/json");
+            // headers = headers.append('Accept', 'application/json');
+            //  let headers = new Headers({ 'Content-Type': 'application/json' });
+            //headers.append('Content-Type', 'application/json');
+            // headers.set();
+            // const options = new RequestOptions({ headers: headers });
+            // console.log(options);
+            //this.body = JSON.stringify(this.body);
+            this.http.post('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle/', this.body, { headers: headers }).subscribe(val => {
+                console.log("post call successful value returned in body",
+                    val);
+            },
+                response => {
+                    console.log("post call in error", response);
+                },
+                () => {
+                    console.log("The Pst observable is now completed.");
+                })
 
         }
     };
@@ -39,14 +62,15 @@ export class AddBlockCycleComponent implements OnInit {
         console.log(this.blockCycles)
 
 
-        
+
         for (let i = 0; i < this.blockCycles.length; ++i) {
 
             this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycles[i].blockCycleId).subscribe(data => {
                 this.tempArr.push(data);
                 this.tempArr.map((data) => {
                     data.map(newData => {
-                        this.blocksArray.push(newData);
+                        let a = Object.assign({ blockCycleId: this.blockCycles[i].blockCycleId }, newData);
+                        this.blocksArray.push(a);
                         console.log(this.blocksArray)
                     })
                 })
@@ -79,16 +103,30 @@ export class AddBlockCycleComponent implements OnInit {
         });
     }
 
+    // prepareHeader(headers: HttpHeaders | null): object {
+    //     headers = new HttpHeaders();
+
+    //     headers = headers.set('Content-Type', 'application/json');
+    //     headers = headers.set('Accept', 'application/json');
+
+    //     return {
+    //         headers: headers
+    //     }
+    // }
 
     createSelection(Index) {
-        let index = this.checkedArray.indexOf(this.blocksArray[Index]);
-        if (index < 0) {
+        let index = this.tempCheckedArray.indexOf(this.blocksArray[Index].blockId);
+        if (index > -1) {
+            this.tempCheckedArray.splice(index, 1);
+            this.checkedArray.splice(index, 1);
+            console.log(this.checkedArray);
+
+            
+        } else {
             let a = Object.assign({ assignDate: "" }, this.blocksArray[Index]);
             console.log(a);
+            this.tempCheckedArray.push(this.blocksArray[Index].blockId);
             this.checkedArray.push(a);
-            console.log(this.checkedArray);
-        } else {
-            this.checkedArray.splice(index, 1);
             console.log(this.checkedArray);
         }
 

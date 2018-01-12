@@ -14,6 +14,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule }     from './app-routing.module';
 import { BlockCycleComponent } from './components/block-cycle/block-cycle.component';
 import { AddBlockCycleComponent } from './components/add-block-cycle/add-block-cycle.component';
+import { BlocksComponent } from './components/blocks/blocks.component';
+import { PropertiesComponent } from './components/properties/properties.component';
+
 
 
 @NgModule({
@@ -24,7 +27,9 @@ import { AddBlockCycleComponent } from './components/add-block-cycle/add-block-c
     SidebarComponent,
     RightSidebarComponent,
     BlockCycleComponent,
-    AddBlockCycleComponent
+    AddBlockCycleComponent,
+    BlocksComponent,
+    PropertiesComponent
   ],
   imports: [
     BrowserModule,
