@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Http, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 declare let $;
 
@@ -30,6 +31,7 @@ export class AddBlockCycleComponent implements OnInit {
     }
 
     sendData() {
+
         for (let i = 0; i < this.checkedArray.length; ++i) {
             this.body = {
                 blockCycleId: this.checkedArray[i].blockCycleId,
@@ -40,24 +42,35 @@ export class AddBlockCycleComponent implements OnInit {
 
             console.log(this.body)
 
-            let headers = new HttpHeaders().set("Content-Type", "application/json; charset=utf-8")
-                .set("Accept", "application/json");
+            let headers = new HttpHeaders().set("Content-Type", "application/json");
+            // .set("Accept", "application/json");
             // headers = headers.append('Accept', 'application/json');
             //  let headers = new Headers({ 'Content-Type': 'application/json' });
             //headers.append('Content-Type', 'application/json');
             // headers.set();
             // const options = new RequestOptions({ headers: headers });
             // console.log(options);
+            let _body = {
+                "startDate": "2018-01-13T07:12:08.589Z",
+                "blocks": [
+                    {
+                        "blockCycleId": 2,
+                        "blockId": 2,
+                        "startDate": "2018-01-13T07:12:08.589Z"
+                    }
+                ]
+            }
             //this.body = JSON.stringify(this.body);
-            this.http.post('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle/', this.body, { headers: headers }).subscribe(val => {
-                console.log("post call successful value returned in body",
-                    val);
-            },
+            this.http.post('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Add', _body, { headers: headers })
+
+                .subscribe(val => {
+                    console.warn("post call successful value returned in body", val);
+                },
                 response => {
-                    console.log("post call in error", response);
+                    console.warn("post call in error", response);
                 },
                 () => {
-                    console.log("The Pst observable is now completed.");
+                    console.warn("The Pst observable is now completed.");
                 })
 
         }
