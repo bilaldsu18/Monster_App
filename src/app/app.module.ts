@@ -16,7 +16,7 @@ import { BlockCycleComponent } from './components/block-cycle/block-cycle.compon
 import { AddBlockCycleComponent } from './components/add-block-cycle/add-block-cycle.component';
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { PropertiesComponent } from './components/properties/properties.component';
-
+import {SearchPipe} from './pipes/search.pipe';
 
 
 @NgModule({
@@ -29,7 +29,8 @@ import { PropertiesComponent } from './components/properties/properties.componen
     BlockCycleComponent,
     AddBlockCycleComponent,
     BlocksComponent,
-    PropertiesComponent
+    PropertiesComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,

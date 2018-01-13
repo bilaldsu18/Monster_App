@@ -26,9 +26,10 @@ export class BlocksComponent implements OnInit {
 
     $('#datepicker-autoclose').datepicker({
       autoclose: true,
-      todayHighlight: true
+      todayHighlight: true,
+      setDate: "10/12/2013"
     });
-
+    $(".datepicker123").datepicker("setDate", "10/12/2013");
 
     setTimeout(() => {
       $(".footable").footable();
@@ -55,9 +56,20 @@ export class BlocksComponent implements OnInit {
 
   }
 
+  
+
   goToPage(data) {
     this.router.navigate(['/properties'], { queryParams: { blockCycleId: data.blockCycleId,  blockId: data.blockId} });
   }
+
+  filterItem(value){
+    //if(!value) this.assignCopy(); //when nothing has typed
+
+    return this.blocksArray.filter(function (el: any) {
+     return el.name.toLowerCase().indexOf(value) > -1;
+   })
+   
+ }
 
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Headers, Http, RequestOptions } from '@angular/http';
 
@@ -20,6 +20,11 @@ export class AddBlockCycleComponent implements OnInit {
     tempCheckedArray = [];
     date;
     body;
+
+    @Output()
+    change: EventEmitter<any> = new EventEmitter<any>();
+
+
     constructor(private http: HttpClient) {
 
     }
@@ -32,6 +37,8 @@ export class AddBlockCycleComponent implements OnInit {
                 startDate: this.checkedArray[i].startDate,
 
             }
+
+            console.log(this.body)
 
             let headers = new HttpHeaders().set("Content-Type", "application/json; charset=utf-8")
                 .set("Accept", "application/json");
@@ -54,6 +61,8 @@ export class AddBlockCycleComponent implements OnInit {
                 })
 
         }
+
+        this.change.emit(null);
     };
 
 
@@ -88,6 +97,10 @@ export class AddBlockCycleComponent implements OnInit {
             todayHighlight: true
         });
 
+        $('#example2').datepicker()                       //  id with "date-two" will pop up a datepicker
+            .on('changeDate', function () {                // when the datechanges
+                $('#example2').datepicker('hide');      // hide the datepicker
+            });
 
         $(".tab-wizard").steps({
             headerTag: "h6"
@@ -98,7 +111,8 @@ export class AddBlockCycleComponent implements OnInit {
                 finish: "Submit"
             }
             , onFinished: () => {
-                this.sendData()
+                this.sendData();
+
             }
         });
     }
@@ -121,7 +135,7 @@ export class AddBlockCycleComponent implements OnInit {
             this.checkedArray.splice(index, 1);
             console.log(this.checkedArray);
 
-            
+
         } else {
             let a = Object.assign({ assignDate: "" }, this.blocksArray[Index]);
             console.log(a);

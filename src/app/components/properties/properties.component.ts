@@ -12,33 +12,62 @@ declare let $;
 })
 export class PropertiesComponent implements OnInit {
 
-  blockCycles: any;
+  propertyInfo: any;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute,private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  searchQuery
+  sub: any;
+  blockCycleId: any;
+  blockId: any;
+  myDate;
 
-
-
+  model2 = "1994-12-14"
   ngOnInit() {
+console.log('----',this.myDate)
+
+    this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        this.blockCycleId = +params['blockCycleId'] || 0;
+        this.blockId = +params['blockId'] || 0;
+
+        console.log(this.blockCycleId);
+        console.log(this.blockId);
+
+        this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + this.blockId + '&' + this.blockCycleId).subscribe(data => {
+          this.propertyInfo = data;
+          console.log(this.propertyInfo);
+        });
+
+      });
 
 
-    $('#datepicker-autoclose').datepicker({
-      autoclose: true,
-      todayHighlight: true
-    });
+
 
 
     setTimeout(() => {
       $(".footable").footable();
-    }, 2000);
+    }, 1000);
 
-
-    this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Get').subscribe(data => {
-      this.blockCycles = data;
-      console.log(this.blockCycles);
+    $('input').filter('.datepicker').datepicker({
+      changeMonth: true,
+      changeYear: true,
+      showOn: 'button',
+      buttonImage: 'jquery/images/calendar.gif',
+      buttonImageOnly: true
     });
-
 
 
   }
 
+  mySelect(event) {
+    console.log('--------------', event)
+    console.log('')
+    this.myDate = event;
+    console.log(this.myDate)
+  }
+  abc(){
+    console.log('sss')
+  }
 }

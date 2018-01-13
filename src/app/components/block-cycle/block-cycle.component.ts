@@ -17,10 +17,7 @@ export class BlockCycleComponent implements OnInit {
 
   constructor(private http: HttpClient) {
     this.title = "Blank Page title";
-    this.subtitle = "This is some text within a card block."
-
-
-
+    this.subtitle = "This is some text within a card block.";
   }
 
   ngOnInit() {
@@ -33,7 +30,7 @@ export class BlockCycleComponent implements OnInit {
     
     setTimeout(() => {
       $(".footable").footable();
-    }, 2000);
+    }, 1000);
     
 
     this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Get').subscribe(data => {
@@ -42,5 +39,14 @@ export class BlockCycleComponent implements OnInit {
     });
 
   }
+
+  countChange(event) {
+    console.log("```````````````````````````")
+  }
+
+  abc(){
+    console.log('00000')
+  }
+
 
 }
