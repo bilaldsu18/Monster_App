@@ -1,18 +1,6 @@
 <div class="row">
   <div class="col-12">
 
-    <!-- <div class="example">
-                          
-                  <p class="text-muted m-b-20">just add class
-                      <code>.complex-colorpicker</code> to create it.</p>
-                  <div class="input-group">
-                      <input type="text" class="form-control" id="datepicker-autoclose" placeholder="mm/dd/yyyy">
-                      <span class="input-group-addon">
-                          <i class="icon-calender"></i>
-                      </span>
-                  </div>
-              </div> -->
-
     <div class="card">
       <div class="card-body">
         <div class="row">
@@ -22,7 +10,7 @@
             <h6 class="card-subtitle">Blocks allocated to Block Cycles</h6>
           </div>
 
-          <input #myInput placeholder="Search" class="form-control" [(ngModel)]="searchQuery" (input)="filterItem(myInput.value)" style="width: 20%;height: 15px;" />
+          <input #myInput placeholder="Search" class="form-control" [(ngModel)]="searchQuery"  style="width: 20%;height: 15px;" />
         </div>
 
         <div class="table-responsive">
@@ -76,12 +64,7 @@
                         <div class="form-group">
                           <div class="controls">
                             <select name="select" id="select" required class="form-control">
-                              <option value="">Select Block</option>
-                              <option value="1">India</option>
-                              <option value="2">USA</option>
-                              <option value="3">UK</option>
-                              <option value="4">Canada</option>
-                              <option value="5">Dubai</option>
+                              <option *ngFor="let i of blockCycles" name="i">{{i.blockCycleId}}</option>                              
                             </select>
                           </div>
                         </div>
@@ -89,7 +72,7 @@
                         <div class="example">
 
                           <div class="input-group">
-                            <input type="text" class="form-control complex-colorpicker" id="datepicker-autoclose"  #box placeholder="mm/dd/yyyy">
+                            <input type="text" class="form-control complex-colorpicker" id="datepicker-autoclose"  placeholder="mm/dd/yyyy" #date />
                             <span class="input-group-addon">
                               <i class="icon-calender"></i>
                             </span>
