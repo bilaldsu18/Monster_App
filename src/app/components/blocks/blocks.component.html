@@ -63,8 +63,9 @@
                       <div class="modal-body">
                         <div class="form-group">
                           <div class="controls">
-                            <select name="select" id="select" required class="form-control">
-                              <option *ngFor="let i of blockCycles" name="i">{{i.blockCycleId}}</option>                              
+                
+                            <select [(ngModel)]="dropDownValue" name="select" id="select" required class="form-control">
+                              <option *ngFor="let i of blocksArray" name="i" [ngValue]="i">{{i.name}}</option>                              
                             </select>
                           </div>
                         </div>
@@ -72,7 +73,7 @@
                         <div class="example">
 
                           <div class="input-group">
-                            <input type="text" class="form-control complex-colorpicker" id="datepicker-autoclose"  placeholder="mm/dd/yyyy" #date />
+                            <input type="text" class="form-control complex-colorpicker" id="datepicker-autoclose"  placeholder="mm/dd/yyyy" [(ngModel)]="date" />
                             <span class="input-group-addon">
                               <i class="icon-calender"></i>
                             </span>
@@ -80,7 +81,7 @@
                         </div>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal" (click)="save()">Save</button>
                         <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
                       </div>
                     </div>

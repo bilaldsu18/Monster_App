@@ -38,7 +38,7 @@ import { SearchPipe } from './pipes/search.pipe';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    HttpClientModule
+    //HttpClientModule
     //RouterModule.forRoot(routes)
   ],
   providers: [],
