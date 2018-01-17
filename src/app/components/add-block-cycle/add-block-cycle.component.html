@@ -30,9 +30,10 @@
                                                 <div class="card-body">
                                                     <ul class="search-listing table-hover contact-list" *ngFor="let i of blocksArray; let Index = index">
                                                         <li>
-                                                            {{i.name}}
-                                                            <input style="float: right;" class="checkbox" type="checkbox" (click)="createSelection(Index)">
-
+                                                            <label [attr.for]="'box-' + Index">
+                                                                    {{i.name}}
+                                                            </label>
+                                                                <input style="float: right;" class="checkbox" [attr.id]="'box-' + Index" type="checkbox" (click)="createSelection(Index)">
                                                         </li>
                                                     </ul>
 

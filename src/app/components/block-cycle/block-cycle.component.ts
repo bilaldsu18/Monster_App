@@ -1,7 +1,8 @@
 import { RequestOptions } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 declare let $;
 
 @Component({
@@ -15,7 +16,7 @@ export class BlockCycleComponent implements OnInit {
   page2 = 1;
   blockCycles: any;
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private router: Router, private route: ActivatedRoute) {
     this.title = "Blank Page title";
     this.subtitle = "This is some text within a card block.";
   }
@@ -49,4 +50,12 @@ export class BlockCycleComponent implements OnInit {
   }
 
 
+  // ===========================================================================
+  //  WHEN USER CLICKS THE BLOCK CYCLE ROW THIS FUNCTION WILL ROUTE THE PAGE
+  // ===========================================================================
+
+  moveToBlocksPage(data) {
+    console.log(data);
+    this.router.navigate(['/blocks'], { queryParams: { blockCycleId: data.blockCycleId} });
+  }
 }

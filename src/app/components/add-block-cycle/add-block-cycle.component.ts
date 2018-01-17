@@ -36,7 +36,7 @@ export class AddBlockCycleComponent implements OnInit {
     constructor(private http: Http) {
 
     }
-   
+
     ngOnInit() {
         this.componentInitData()
     }
@@ -47,6 +47,7 @@ export class AddBlockCycleComponent implements OnInit {
 
 
     sendData() {
+      
 
         for (let i = 0; i < this.checkedArray.length; ++i) {
 
@@ -59,8 +60,12 @@ export class AddBlockCycleComponent implements OnInit {
             this.addBlockCycleSendArr.push(tempDataHolder)
             console.log(this.addBlockCycleSendArr)
         }
+
+        let date = $("#datepicker-autoclose").val();
+        
+
         let _body = {
-            "startDate": "2018-01-14T07:12:08.589Z",
+            "startDate": date,
             "blocks": this.addBlockCycleSendArr
         }
         console.log(_body)
@@ -91,11 +96,11 @@ export class AddBlockCycleComponent implements OnInit {
             () => {
                 console.warn("The Pst observable is now completed.");
             })
-            
-        }
-        
-        
-        
+
+    }
+
+
+
     //============================================================== 
     // ADD BLOCK COMPONENT INITIAL DATA
     // ==============================================================
@@ -105,6 +110,9 @@ export class AddBlockCycleComponent implements OnInit {
             this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycles[i].blockCycleId)
                 .map(res => res.json())
                 .subscribe(data => {
+                    data.map((data) => {
+                        data['blockCycleId'] = this.blockCycles[i].blockCycleId
+                    })
                     this.blocksArray = [...this.blocksArray, ...data];
                 });
         }

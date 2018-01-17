@@ -20,7 +20,8 @@ export class PropertiesComponent implements OnInit {
   blockCycleId: any;
   blockId: any;
   myDate;
-
+  blocksArray;
+  dropDownValue;
 
 
   ngOnInit() {
@@ -45,9 +46,16 @@ export class PropertiesComponent implements OnInit {
 
         this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + this.blockId + '&' + this.blockCycleId).subscribe(data => {
           this.propertyInfo = data.json();
-          console.log(this.propertyInfo);
+          
         });
 
+
+        this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycleId)
+          .map(res => res.json())
+          .subscribe(data => {
+          
+            this.blocksArray = data;
+          });
       });
 
     setTimeout(() => {
@@ -67,7 +75,18 @@ export class PropertiesComponent implements OnInit {
 
   mySelect(event) {
     this.myDate = event;
-
   }
 
+
+  dataChanged(event) {
+    
+
+
+    this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + event.blockId + '&' + this.blockCycleId)
+      .map(data => data.json())
+      .subscribe(data => {
+        this.propertyInfo = data;        
+      });
+
+  }
 }

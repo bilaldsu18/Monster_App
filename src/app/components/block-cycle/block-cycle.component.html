@@ -17,10 +17,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let i of blockCycles">
+                            <tr *ngFor="let i of blockCycles" (click)="moveToBlocksPage(i)">
                                 <td>{{i.blockCycleId}}</td>
 
-                                <td>{{i.startDate}}</td>
+                                <td>{{i.startDate | date: 'dd/MM/yyyy'}}</td>
                                 <td>{{i.inspections}}</td>
                                 <td>{{i.properties}}</td>
                                 <td class="text-right">

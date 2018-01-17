@@ -30,7 +30,7 @@
                 <td (click)="goToPage(i)">{{i.name}}</td>
 
                 <td>{{i.address}}</td>
-                <td>{{i.startDate}}</td>
+                <td>{{i.startDate | date: 'dd/MM/yyyy'}}</td>
 
                 <td class="text-right">
                   {{i.propertiesComplete}}
@@ -65,7 +65,7 @@
                           <div class="controls">
                 
                             <select [(ngModel)]="dropDownValue" name="select" id="select" required class="form-control">
-                              <option *ngFor="let i of blocksArray" name="i" [ngValue]="i">{{i.name}}</option>                              
+                              <option *ngFor="let i of blocksList" name="i" [ngValue]="i">{{i.name}}</option>                              
                             </select>
                           </div>
                         </div>
