@@ -33,9 +33,9 @@
                 <td>{{i.startDate | date: 'dd/MM/yyyy'}}</td>
 
                 <td class="text-right">
-                  {{i.propertiesComplete}}
+                  {{i.propertiesComplete}}/{{i.properties}}
                   <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: 65%; height:6px;" aria-valuenow="25" aria-valuemin="0"
+                    <div class="progress-bar bg-success" role="progressbar"  [ngStyle]="{'width.%':(i.propertiesComplete/i.properties) *100}" style="height:6px;" aria-valuenow="25" aria-valuemin="0"
                       aria-valuemax="100"></div>
                   </div>
                 </td>
@@ -73,7 +73,7 @@
                         <div class="example">
 
                           <div class="input-group">
-                            <input type="text" class="form-control complex-colorpicker" id="datepicker-autoclose"  placeholder="mm/dd/yyyy" [(ngModel)]="date" />
+                            <input type="text" class="form-control complex-colorpicker" id="example2"  placeholder="DD/MM/YYYY" [(ngModel)]="date" />
                             <span class="input-group-addon">
                               <i class="icon-calender"></i>
                             </span>

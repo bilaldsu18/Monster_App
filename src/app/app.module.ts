@@ -17,7 +17,7 @@ import { AddBlockCycleComponent } from './components/add-block-cycle/add-block-c
 import { BlocksComponent } from './components/blocks/blocks.component';
 import { PropertiesComponent } from './components/properties/properties.component';
 import { SearchPipe } from './pipes/search.pipe';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +38,7 @@ import { SearchPipe } from './pipes/search.pipe';
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    ReactiveFormsModule
     //HttpClientModule
     //RouterModule.forRoot(routes)
   ],

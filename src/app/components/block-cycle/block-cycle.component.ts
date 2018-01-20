@@ -55,7 +55,6 @@ export class BlockCycleComponent implements OnInit {
   // ===========================================================================
 
   moveToBlocksPage(data) {
-    console.log(data);
     this.router.navigate(['/blocks'], { queryParams: { blockCycleId: data.blockCycleId} });
   }
 }

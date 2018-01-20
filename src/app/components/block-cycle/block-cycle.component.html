@@ -24,9 +24,9 @@
                                 <td>{{i.inspections}}</td>
                                 <td>{{i.properties}}</td>
                                 <td class="text-right">
-                                    {{i.blocksComplete}}
+                                    {{i.blocksComplete}}/{{i.blocks}}
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 65%; height:6px;" aria-valuenow="25" aria-valuemin="0"
+                                        <div class="progress-bar bg-success" role="progressbar"[ngStyle]="{'width.%':(i.blocksComplete/i.blocks) *100}" style="height:6px;" aria-valuenow="25" aria-valuemin="0"
                                             aria-valuemax="100"></div>
                                     </div>
                                 </td>

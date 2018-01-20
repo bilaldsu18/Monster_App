@@ -19,3 +19,8 @@
 .rightDate {
     float: right; font-weight: 500
 }
+
+
+.step2-class {
+    width:160px;float: right;position: relative;bottom: 8px;
+}

@@ -23,7 +23,7 @@ export class BlocksComponent implements OnInit {
   blockCycleId;
   sub;
   blocksList;
-
+  
   constructor(private http: Http, private router: Router, private route: ActivatedRoute) {
     this.title = "Blank Page title";
     this.subtitle = "This is some text within a card block."
@@ -42,10 +42,10 @@ export class BlocksComponent implements OnInit {
   // ==============================================================
 
   componentInitData() {
-    $('#datepicker-autoclose').datepicker({
+    $('#example2').datepicker({
       autoclose: true,
       todayHighlight: true,
-      setDate: "10/12/2013"
+      format: 'dd/mm/yyyy'
     });
 
 
@@ -125,10 +125,8 @@ export class BlocksComponent implements OnInit {
   // ==============================================================
 
   save() {
-    let date = $("#datepicker-autoclose").val();
-    console.log(date);
-    console.log(this.dropDownValue);
-
+    let date = $("#example2").val();
+    
     let headers = new Headers();
     headers.append('Content-Type', 'application/json')
     let options = new RequestOptions({ method: RequestMethod.Post, headers: headers });
@@ -139,18 +137,13 @@ export class BlocksComponent implements OnInit {
       "startDate": date
     }
 
-
     let body = JSON.stringify(_body);
-    console.log(body);
-
-    this.http.post("http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
+    
+    this.http.post("https://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
       .map(res => res.json())
       .subscribe(data => {
-        console.log(data);
+        
       })
-
-
-
 
   }
 

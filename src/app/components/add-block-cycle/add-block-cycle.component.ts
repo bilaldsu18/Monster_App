@@ -1,10 +1,10 @@
-import { log } from 'util';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
+import { Component, OnInit, Input, Output, EventEmitter, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { logWarnings } from 'protractor/built/driverProviders';
 import { Http, RequestOptions, Headers, RequestMethod, Jsonp } from '@angular/http';
 
-
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare let $;
 
 
@@ -28,17 +28,28 @@ export class AddBlockCycleComponent implements OnInit {
     body;
     arr = [];
 
+    dateForm: FormGroup;
+
 
     @Output()
     change: EventEmitter<any> = new EventEmitter<any>();
 
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private fb: FormBuilder) {
 
     }
 
     ngOnInit() {
-        this.componentInitData()
+        this.componentInitData();
+        this.createForm();
+    }
+
+
+
+    createForm() {
+        this.dateForm = this.fb.group({
+
+        });
     }
 
     //============================================================== 
@@ -47,22 +58,22 @@ export class AddBlockCycleComponent implements OnInit {
 
 
     sendData() {
-      
+
 
         for (let i = 0; i < this.checkedArray.length; ++i) {
 
             let tempDataHolder = {
                 blockCycleId: this.checkedArray[i].blockCycleId,
                 blockId: this.checkedArray[i].blockId,
-                startDate: this.checkedArray[i].startDate,
+                startDate: this.checkedArray[i].assignDate,
 
             }
             this.addBlockCycleSendArr.push(tempDataHolder)
-            console.log(this.addBlockCycleSendArr)
+
         }
 
         let date = $("#datepicker-autoclose").val();
-        
+
 
         let _body = {
             "startDate": date,
@@ -76,25 +87,23 @@ export class AddBlockCycleComponent implements OnInit {
         });
 
 
-
-
         let headers = new Headers();
         headers.append('Content-Type', 'application/json') // ... Set content type to JSON
         let options = new RequestOptions({ method: RequestMethod.Post, headers: headers }); // Create a request option
 
         this.http.post('https://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Add', {
-            "startDate": "2018-01-13T07:12:08.589Z",
+            "startDate": date,
             "blocks": this.addBlockCycleSendArr
         }, options)
 
             .subscribe(val => {
-                console.warn("post call successful value returned in body", val);
+
             },
             response => {
-                console.warn("post call in error", response);
+
             },
             () => {
-                console.warn("The Pst observable is now completed.");
+
             })
 
     }
@@ -106,35 +115,43 @@ export class AddBlockCycleComponent implements OnInit {
     // ==============================================================
 
     componentInitData() {
-        for (let i = 0; i < this.blockCycles.length; ++i) {
-            this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycles[i].blockCycleId)
-                .map(res => res.json())
-                .subscribe(data => {
-                    data.map((data) => {
-                        data['blockCycleId'] = this.blockCycles[i].blockCycleId
-                    })
-                    this.blocksArray = [...this.blocksArray, ...data];
-                });
-        }
+        // for (let i = 0; i < this.blockCycles.length; ++i) {
+        //     this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycles[i].blockCycleId)
+        //         .map(res => res.json())
+        //         .subscribe(data => {
+        //             data.map((data) => {
+        //                 data['blockCycleId'] = this.blockCycles[i].blockCycleId
+        //             })
+        //             this.blocksArray = [...this.blocksArray, ...data];
+        //         });
+        // }
 
 
+        this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/GetUnassigned/0')
+            .map(res => res.json())
+            .subscribe(data => {
+                data.map((data) => {
+                    data['blockCycleId'] = 0;
+                })
+                this.blocksArray = [...this.blocksArray, ...data];
+
+            });
 
 
-        // Date Picker
-        $('.mydatepicker, #datepicker').datepicker();
         $('#datepicker-autoclose').datepicker({
             autoclose: true,
-            todayHighlight: true
+            todayHighlight: true,
+            format: 'dd/mm/yyyy'
+        })
+
+
+        $('#sandbox-container .input-group.date').datepicker({
         });
 
-        $('#example2').datepicker()
-            .on('changeDate', function () {
-                $('#example2').datepicker('hide');
-            });
 
         $(".tab-wizard").steps({
             headerTag: "h6"
-            , bodyTag: "section"
+            , bodyTag: "div"
             , transitionEffect: "fade"
             , titleTemplate: '<span class="step">#index#</span> #title#'
             , labels: {
@@ -143,8 +160,25 @@ export class AddBlockCycleComponent implements OnInit {
             , onFinished: () => {
                 this.sendData();
 
+            },
+            onStepChanged: (event, currentIndex, priorIndex) => {
+
+                if (currentIndex === 1) {
+
+                    setTimeout(() => {
+                        $('#example2').datepicker({
+                            autoclose: true,
+                            todayHighlight: true,
+                            format: 'dd/mm/yyyy'
+                        }).on('changeDate', (e) => {
+
+                        });
+                    }, 100);
+                }
             }
         });
+
+
 
         setTimeout(() => {
             $(".footable").footable();
@@ -172,7 +206,9 @@ export class AddBlockCycleComponent implements OnInit {
             let a = Object.assign({ assignDate: "" }, this.blocksArray[Index]);
             this.tempCheckedArray.push(this.blocksArray[Index].blockId);
             this.checkedArray.push(a);
+
         }
     }
+
 
 }

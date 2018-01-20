@@ -31,7 +31,7 @@ export class BreadcrumbComponent implements OnInit {
         .subscribe((event) => {
             this.titleService.setTitle(event['title']);
             this.pageInfo = event;
-            console.log(this.pageInfo)
+            
         });
     }
   
