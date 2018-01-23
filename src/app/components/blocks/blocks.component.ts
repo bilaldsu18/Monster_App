@@ -23,7 +23,7 @@ export class BlocksComponent implements OnInit {
   blockCycleId;
   sub;
   blocksList;
-  
+  searchQuery;
   constructor(private http: Http, private router: Router, private route: ActivatedRoute) {
     this.title = "Blank Page title";
     this.subtitle = "This is some text within a card block."
@@ -124,12 +124,14 @@ export class BlocksComponent implements OnInit {
   //            THIS FUCNTION WILL SEND DATA TO API
   // ==============================================================
 
+  
+
   save() {
     let date = $("#example2").val();
     
     let headers = new Headers();
     headers.append('Content-Type', 'application/json')
-    let options = new RequestOptions({ method: RequestMethod.Post, headers: headers });
+    let options = new RequestOptions({ headers: headers });
 
     let _body = {
       "blockCycleId": this.blockCycleId,
@@ -138,8 +140,9 @@ export class BlocksComponent implements OnInit {
     }
 
     let body = JSON.stringify(_body);
-    
-    this.http.post("https://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
+    console.log(body)
+
+    this.http.post("http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
       .map(res => res.json())
       .subscribe(data => {
         
