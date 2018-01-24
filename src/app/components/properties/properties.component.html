@@ -4,14 +4,14 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col">
+                <div class="row" class="centerARow">
+                    <div style="width: 213px;">
                         <h4 class="card-title">Properties</h4>
                         <h6 class="card-subtitle">Properties on the block cycle</h6>
                     </div>
-                    <!-- style="display: flex;justify-content: center;align-items: center;position: relative;bottom: 54px;" -->
-                   
-                    <div class="form-group" style="position: relative;right: 29%;width: 24%">
+
+
+                    <div class="form-group">
                         <div class="controls">
 
                             <select [(ngModel)]="dropDownValue" (ngModelChange)="dataChanged($event)" name="select" id="select" required class="form-control">
@@ -39,22 +39,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let i of propertyInfo| search:searchQuery;">
+                            <tr class="footable-even" *ngFor="let i of propertyInfo| search:searchQuery;">
                                 <td>{{i.address}}</td>
                                 <td></td>
 
                                 <td>{{i.comments}}</td>
 
                                 <td>
-                                    <!-- <div class="input-group date" style="width:160px">
-                                        <input type="text" data-provide="datepicker" class="form-control" placeholder="mm/dd/yyyy" id="myDateTimePicker" [ngModel]="myDate"
-                                            (onSelect)="mySelect($event)">
-                                        <span class="input-group-addon">
-                                            <i class="icon-calender"></i>
-                                        </span>
-                                    </div> -->
                                     {{i.nextInspectionDate | date: 'dd/MM/yyyy'}}
                                 </td>
+
+
                                 <td>
                                     {{i.inspections}}
                                 </td>
@@ -67,22 +62,13 @@
 
                         <tfoot>
                             <tr>
-                                <td colspan="2">
-                                    <!-- <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact">Add New Contact</button> -->
-                                </td>
-                                <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <div class="modal-body">
-
-                                            </div>
-
-                                        </div>
-                                        <!-- /.modal-content -->
-                                    </div>
-                                    <!-- /.modal-dialog -->
-                                </div>
+                                <label class="form-inline">Show
+                                    <select id="demo-show-entries" class="form-control input-sm">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                        <option value="20">20</option>
+                                    </select> entries </label>
                                 <td colspan="7">
                                     <div class="text-right">
                                         <ul class="pagination"> </ul>
@@ -91,9 +77,96 @@
                             </tr>
                         </tfoot>
                     </table>
+                   
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+
+<!-- <div class="card">
+    <div class="card-body">
+
+         <div class="row" class="centerARow">
+                    <div style="width: 213px;">
+                        <h4 class="card-title">Properties</h4>
+                        <h6 class="card-subtitle">Properties on the block cycle</h6>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="controls">
+
+                            <select [(ngModel)]="dropDownValue" (ngModelChange)="dataChanged($event)" name="select" id="select" required class="form-control">
+                                <option *ngFor="let i of blocksArray" name="i" [ngValue]="i">{{i.name}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input #myInput placeholder="Search" class="form-control" [(ngModel)]="searchQuery" />
+                    </div>
+                </div>
+     
+
+        <table id="demo-foo-pagination" class="table m-b-0 toggle-arrow-tiny" data-page-size="5">
+            <thead>
+                <tr>
+                  
+
+                    <th>Property</th>
+                    <th>Pest</th>
+                    <th>Comments</th>
+                    <th>Next Inspection</th>
+                    <th>Inspections</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+                <tr class="footable-even" *ngFor="let i of propertyInfo| search:searchQuery; let Index = index">
+                    <td>{{i.address}}</td>
+                    <td></td>
+
+                    <td>{{i.comments}}</td>
+
+                    <td>
+                        {{i.nextInspectionDate | date: 'dd/MM/yyyy'}}
+                    </td>
+
+
+                    <td>
+                        {{i.inspections}}
+                    </td>
+                    <td>
+                        {{i.statusId}}
+                    </td>
+
+                </tr>
+
+            </tbody>
+            <tfoot>
+                <tr>
+
+                    <label class="form-inline">Show
+                        <select id="demo-show-entries" class="form-control input-sm">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select> entries </label>
+
+                    <td colspan="5">
+                        <div class="text-right">
+                            <ul class="pagination pagination-split m-t-30"> </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div> -->

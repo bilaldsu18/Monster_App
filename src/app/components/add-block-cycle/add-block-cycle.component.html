@@ -34,6 +34,7 @@
                                                                 {{i.name}}
                                                             </label>
                                                             <input style="float: right;" class="checkbox" [attr.id]="'box-' + Index" type="checkbox" (click)="createSelection(Index)">
+
                                                         </li>
                                                     </ul>
 
@@ -62,25 +63,16 @@
                                                 <div class="card-body" style="padding: 0px">
                                                     <ul class="search-listing table-hover contact-list" *ngFor="let i of checkedArray; let Index = index">
                                                         <li>
-
-                                                            
-                                                                {{i.name}}
-                                                                <input type="date"  style="float: right" name="i"  [(ngModel)]="i.assignDate">
-                                                            
-                                                            <!-- <div class="input-group date" style="width:160px;float: right;position: relative;bottom: 8px;">
-
-
-                                                            <input type="text" name="i" [(ngModel)]="i.assignDate" class="form-control complex-colorpicker" id="example2" #box placeholder="DD/MM/YYYY">
-                                                            <span class="input-group-addon">
+                                                            {{i.name}}
+                                                            <div class="input-group" style="width:170px;bottom: 8px;float: right;">
+                                                                <input type="text" name="i" [(ngModel)]="i.assignDate" class="form-control complex-colorpicker" [attr.id]="'example' + Index"
+                                                                    placeholder="DD/MM/YYYY">
+                                                                <span class="input-group-addon">
                                                                     <i class="icon-calender"></i>
                                                                 </span>
-
-
-
-                                                            </div> -->
+                                                            </div>
                                                         </li>
                                                     </ul>
-
                                                 </div>
                                             </div>
                                         </div>

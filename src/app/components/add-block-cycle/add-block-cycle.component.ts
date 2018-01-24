@@ -166,15 +166,30 @@ export class AddBlockCycleComponent implements OnInit {
                 if (currentIndex === 1) {
 
                     setTimeout(() => {
-                        $('#example2').datepicker({
-                            autoclose: true,
-                            todayHighlight: true,
-                            format: 'dd/mm/yyyy'
-                        }).on('changeDate', (e) => {
-
-                        });
+                        for (let i = 0; i < this.checkedArray.length; ++i) {
+                            console.log(this.checkedArray.length)
+                            let id = "#example" + i;
+                            $(id).datepicker({
+                                autoclose: true,
+                                todayHighlight: true,
+                                format: 'dd/mm/yyyy'
+                            })
+                        }
                     }, 100);
                 }
+
+                if (currentIndex === 2) {
+                        console.log(currentIndex);
+                        for (let i = 0; i < this.checkedArray.length; ++i) { 
+                            let id = "#example" + i;
+                            let date = $(id).val();
+                            this.checkedArray[i].assignDate = date;
+                            console.log(this.checkedArray[i])
+                        }
+
+                 }
+
+
             }
         });
 

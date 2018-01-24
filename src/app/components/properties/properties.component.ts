@@ -22,7 +22,7 @@ export class PropertiesComponent implements OnInit {
   myDate;
   blocksArray;
   dropDownValue;
-
+  makeHeighSmall = false;
 
   ngOnInit() {
     this.componentInitData()
@@ -43,12 +43,10 @@ export class PropertiesComponent implements OnInit {
         this.blockCycleId = +params['blockCycleId'] || 0;
         this.blockId = +params['blockId'] || 0;
 
-
         this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + this.blockId + '&' + this.blockCycleId).subscribe(data => {
           this.propertyInfo = data.json();
           
         });
-
 
         this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycleId)
           .map(res => res.json())
@@ -57,36 +55,57 @@ export class PropertiesComponent implements OnInit {
             this.blocksArray = data;
           });
       });
+    // setTimeout(() => {
+    //   $(".footable").footable();
+    // }, 1000);
 
-    setTimeout(() => {
-      $(".footable").footable();
-    }, 1000);
-
-    $('input').filter('.datepicker').datepicker({
-      changeMonth: true,
-      changeYear: true,
-      showOn: 'button',
-      buttonImage: 'jquery/images/calendar.gif',
-      buttonImageOnly: true
-    });
-
-
+    // $('input').filter('.datepicker').datepicker({
+    //   changeMonth: true,
+    //   changeYear: true,
+    //   showOn: 'button',
+    //   buttonImage: 'jquery/images/calendar.gif',
+    //   buttonImageOnly: true
+    // });
   }
 
-  mySelect(event) {
-    this.myDate = event;
-  }
+  // mySelect(event) {
+  //   this.myDate = event;
+  // }
 
+
+  // ============================================================== 
+  // PROPERTIES COMPONENT DATA CHANGE ON DROP DOWN
+  // ==============================================================
 
   dataChanged(event) {
     
-
-
+    setTimeout(() => {
+      $('.footable-even').footable();
+    }, 100);
+    
     this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + event.blockId + '&' + this.blockCycleId)
-      .map(data => data.json())
-      .subscribe(data => {
-        this.propertyInfo = data;        
+    .map(data => data.json())
+    .subscribe(data => {
+      this.propertyInfo = data;    
+      console.log(data); 
+      this.makeHeighSmall = true;  
+      // setTimeout(() => {
+      //   $(".footable").footable();
+      // }, 1000);
+      
+
       });
+
+  }
+
+
+  dropDownSize(event) {
+    console.log(event);
+    let value = "" + event;
+    //$('#demo-foo-addrow').pageSize(10);
+
+  
+    
 
   }
 }
