@@ -91,7 +91,7 @@ export class AddBlockCycleComponent implements OnInit {
         headers.append('Content-Type', 'application/json') // ... Set content type to JSON
         let options = new RequestOptions({ method: RequestMethod.Post, headers: headers }); // Create a request option
 
-        this.http.post('https://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Add', {
+        this.http.post('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Add', {
             "startDate": date,
             "blocks": this.addBlockCycleSendArr
         }, options)
@@ -179,17 +179,14 @@ export class AddBlockCycleComponent implements OnInit {
                 }
 
                 if (currentIndex === 2) {
-                        console.log(currentIndex);
-                        for (let i = 0; i < this.checkedArray.length; ++i) { 
-                            let id = "#example" + i;
-                            let date = $(id).val();
-                            this.checkedArray[i].assignDate = date;
-                            console.log(this.checkedArray[i])
-                        }
-
-                 }
-
-
+                    console.log(currentIndex);
+                    for (let i = 0; i < this.checkedArray.length; ++i) {
+                        let id = "#example" + i;
+                        let date = $(id).val();
+                        this.checkedArray[i].assignDate = date;
+                        console.log(this.checkedArray[i])
+                    }
+                }
             }
         });
 
@@ -199,9 +196,6 @@ export class AddBlockCycleComponent implements OnInit {
             $(".footable").footable();
         }, 1000);
     }
-
-
-
 
 
 

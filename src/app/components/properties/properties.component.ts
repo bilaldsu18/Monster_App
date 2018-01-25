@@ -24,6 +24,8 @@ export class PropertiesComponent implements OnInit {
   dropDownValue;
   makeHeighSmall = false;
   temp = 4;
+  abc = 5;
+  pop;
 
   ngOnInit() {
     this.componentInitData()
@@ -62,7 +64,7 @@ export class PropertiesComponent implements OnInit {
         $(".footable").footable();
     }, 1000);
 
-    
+
       setTimeout(() => {
         console.log("Settime footer")
         $('.footable-even').footable();
@@ -98,20 +100,16 @@ export class PropertiesComponent implements OnInit {
 
   dataChanged(event) {
     
-    setTimeout(() => {
-      $('.footable-even').footable();
-    }, 100);
-    
+
     this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + event.blockId + '&' + this.blockCycleId)
     .map(data => data.json())
     .subscribe(data => {
       this.propertyInfo = data;    
       console.log(data); 
       this.makeHeighSmall = true;  
-      // setTimeout(() => {
-      //   $(".footable").footable();
-      // }, 1000);
-      
+      setTimeout(() => {
+        $('.footable-even').footable();
+      }, 1000);
 
       });
 
@@ -121,7 +119,21 @@ export class PropertiesComponent implements OnInit {
   dropDownSize(event) {
     console.log(event);
     let value = "" + event;
-    this.temp = event;
+    this.abc = event;
+    console.log(this.abc);
+    console.log(this.propertyInfo);
+    
     //$('#demo-foo-addrow').pageSize(10);
   }
+
+
+  listChange(event) {
+    console.log(event);
+    if(this.abc < this.propertyInfo.length) {
+      this.abc += this.abc;
+      this.propertyInfo.splice(this.abc, 5);
+    }
+    console.log(this.abc);
+  }
+
 }

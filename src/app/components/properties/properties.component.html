@@ -88,33 +88,33 @@
 <div class="card">
     <div class="card-body">
 
-         <div class="row" class="centerARow">
-                    <div style="width: 213px;">
-                        <h4 class="card-title">Properties</h4>
-                        <h6 class="card-subtitle">Properties on the block cycle</h6>
-                    </div>
+        <div class="row" class="centerARow">
+            <div style="width: 213px;">
+                <h4 class="card-title">Properties</h4>
+                <h6 class="card-subtitle">Properties on the block cycle</h6>
+            </div>
 
 
-                    <div class="form-group">
-                        <div class="controls">
+            <div class="form-group">
+                <div class="controls">
 
-                            <select [(ngModel)]="dropDownValue" (ngModelChange)="dataChanged($event)" name="select" id="select" required class="form-control">
-                                <option *ngFor="let i of blocksArray" name="i" [ngValue]="i">{{i.name}}</option>
-                            </select>
+                    <select [(ngModel)]="dropDownValue" (ngModelChange)="dataChanged($event)" name="select" id="select" required class="form-control">
+                        <option *ngFor="let i of blocksArray" name="i" [ngValue]="i">{{i.name}}</option>
+                    </select>
 
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <input #myInput placeholder="Search" class="form-control" [(ngModel)]="searchQuery" />
-                    </div>
                 </div>
-     
+            </div>
+
+            <div class="form-group">
+                <input #myInput placeholder="Search" class="form-control" [(ngModel)]="searchQuery" />
+            </div>
+        </div>
+
 
         <table id="demo-foo-pagination" class="table m-b-0 toggle-arrow-tiny footable" data-page-size="5">
             <thead>
                 <tr>
-                  
+
 
                     <th>Property</th>
                     <th>Pest</th>
@@ -128,7 +128,7 @@
             <tbody>
 
 
-                <tr  *ngFor="let i of propertyInfo| search:searchQuery; let Index = index">
+                <tr class="footable-even" *ngFor="let i of propertyInfo| search:searchQuery; let Index = index">
                     <td>{{i.address}}</td>
                     <td></td>
 
@@ -153,7 +153,7 @@
                 <tr>
 
                     <label class="form-inline">Show
-                        <select id="demo-show-entries" class="form-control input-sm">
+                        <select [(ngModel)]="pop" (ngModelChange)="dropDownSize($event)" id="demo-show-entries" class="form-control input-sm">
                             <option value="5">5</option>
                             <option value="10">10</option>
                             <option value="15">15</option>

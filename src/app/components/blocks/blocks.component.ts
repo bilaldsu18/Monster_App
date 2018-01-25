@@ -45,7 +45,7 @@ export class BlocksComponent implements OnInit {
     $('#example2').datepicker({
       autoclose: true,
       todayHighlight: true,
-      format: 'dd/mm/yyyy'
+      format: 'mm/dd/yyyy'
     });
 
 
@@ -124,15 +124,23 @@ export class BlocksComponent implements OnInit {
   //            THIS FUCNTION WILL SEND DATA TO API
   // ==============================================================
 
-  
+
 
   save() {
     let date = $("#example2").val();
-    
+
     let headers = new Headers();
     headers.append('Content-Type', 'application/json')
     let options = new RequestOptions({ headers: headers });
+    // const headerDict = {
+    //   'Content-Type': ',application/x-www-form-urlencoded,application/json',
+    //   'Accept': 'application/json,application/x-www-form-urlencoded',
+    //   'Access-Control-Allow-Headers': 'Content-Type',
+    // }
 
+    // const requestOptions = {
+    //   headers: new Headers(headerDict),
+    // };
     let _body = {
       "blockCycleId": this.blockCycleId,
       "blockId": this.dropDownValue.blockId,
@@ -145,7 +153,7 @@ export class BlocksComponent implements OnInit {
     this.http.post("http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
       .map(res => res.json())
       .subscribe(data => {
-        
+
       })
 
   }
