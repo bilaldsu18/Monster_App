@@ -23,6 +23,7 @@ export class PropertiesComponent implements OnInit {
   blocksArray;
   dropDownValue;
   makeHeighSmall = false;
+  temp = 4;
 
   ngOnInit() {
     this.componentInitData()
@@ -55,6 +56,24 @@ export class PropertiesComponent implements OnInit {
             this.blocksArray = data;
           });
       });
+
+
+      setTimeout(() => {
+        $(".footable").footable();
+    }, 1000);
+
+    
+      setTimeout(() => {
+        console.log("Settime footer")
+        $('.footable-even').footable();
+      }, 100);
+    
+
+      setTimeout(() => {
+        console.log("Settime paginatiom")        
+        $('.footable-page').footable();
+      }, 100);
+      
     // setTimeout(() => {
     //   $(".footable").footable();
     // }, 1000);
@@ -102,10 +121,7 @@ export class PropertiesComponent implements OnInit {
   dropDownSize(event) {
     console.log(event);
     let value = "" + event;
+    this.temp = event;
     //$('#demo-foo-addrow').pageSize(10);
-
-  
-    
-
   }
 }
