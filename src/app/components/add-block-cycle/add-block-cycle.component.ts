@@ -29,7 +29,7 @@ export class AddBlockCycleComponent implements OnInit {
     arr = [];
 
     dateForm: FormGroup;
-
+    testDate;
 
     @Output()
     change: EventEmitter<any> = new EventEmitter<any>();
@@ -79,7 +79,7 @@ export class AddBlockCycleComponent implements OnInit {
             "startDate": date,
             "blocks": this.addBlockCycleSendArr
         }
-        
+
 
 
         $(() => {
@@ -100,12 +100,27 @@ export class AddBlockCycleComponent implements OnInit {
 
             },
             response => {
-
             },
             () => {
-
             })
 
+
+        for (let i = 0; i < this.checkedArray.length; ++i) {
+            let id = "#box-" + i;
+            $(id).prop("checked", false);
+        }
+
+        this.tempCheckedArray = [];
+        this.checkedArray = [];
+
+        this.testDate = "";
+
+        setTimeout(() => {
+            for (var i = 0; i < 3; i++) {
+                $(".tab-wizard").steps("previous");
+            }
+
+        }, 1000);
     }
 
 
@@ -160,14 +175,21 @@ export class AddBlockCycleComponent implements OnInit {
             , onFinished: () => {
                 this.sendData();
 
+
+
             },
+
+            onInit: () => {
+                console.log("Taimoor");
+            },
+
             onStepChanged: (event, currentIndex, priorIndex) => {
 
                 if (currentIndex === 1) {
-
+                    console.log(currentIndex);
                     setTimeout(() => {
                         for (let i = 0; i < this.checkedArray.length; ++i) {
-                           
+
                             let id = "#example" + i;
                             $(id).datepicker({
                                 autoclose: true,
