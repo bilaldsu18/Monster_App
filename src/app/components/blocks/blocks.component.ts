@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { log } from 'util';
 declare let $;
 
 @Component({
@@ -64,6 +63,20 @@ export class BlocksComponent implements OnInit {
           .map(res => res.json())
           .subscribe(data => {
             this.blocksArray = data;
+            setTimeout(() => {
+              for (let i = 0; i < this.blocksArray.length; ++i) {
+
+                  let id = "#example" + i;
+                  $(id).datepicker({
+                      autoclose: true,
+                      todayHighlight: true,
+                      format: 'dd/mm/yyyy'
+                  })
+                    
+                  $(id).val(this.blocksArray[i].startDate);
+
+              }
+          }, 100);
           });
 
 

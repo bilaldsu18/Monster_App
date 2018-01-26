@@ -174,19 +174,11 @@ export class AddBlockCycleComponent implements OnInit {
             }
             , onFinished: () => {
                 this.sendData();
-
-
-
-            },
-
-            onInit: () => {
-                console.log("Taimoor");
             },
 
             onStepChanged: (event, currentIndex, priorIndex) => {
 
                 if (currentIndex === 1) {
-                    console.log(currentIndex);
                     setTimeout(() => {
                         for (let i = 0; i < this.checkedArray.length; ++i) {
 
