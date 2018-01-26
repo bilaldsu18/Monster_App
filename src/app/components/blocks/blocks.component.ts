@@ -148,7 +148,6 @@ export class BlocksComponent implements OnInit {
     }
 
     let body = JSON.stringify(_body);
-    console.log(body)
 
     this.http.post("http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
       .map(res => res.json())

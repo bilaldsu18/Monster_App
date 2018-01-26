@@ -66,13 +66,11 @@ export class PropertiesComponent implements OnInit {
 
 
       setTimeout(() => {
-        console.log("Settime footer")
         $('.footable-even').footable();
       }, 100);
     
 
       setTimeout(() => {
-        console.log("Settime paginatiom")        
         $('.footable-page').footable();
       }, 100);
       
@@ -105,7 +103,6 @@ export class PropertiesComponent implements OnInit {
     .map(data => data.json())
     .subscribe(data => {
       this.propertyInfo = data;    
-      console.log(data); 
       this.makeHeighSmall = true;  
       setTimeout(() => {
         $('.footable-even').footable();
@@ -117,23 +114,18 @@ export class PropertiesComponent implements OnInit {
 
 
   dropDownSize(event) {
-    console.log(event);
     let value = "" + event;
     this.abc = event;
-    console.log(this.abc);
-    console.log(this.propertyInfo);
     
     //$('#demo-foo-addrow').pageSize(10);
   }
 
 
   listChange(event) {
-    console.log(event);
     if(this.abc < this.propertyInfo.length) {
       this.abc += this.abc;
       this.propertyInfo.splice(this.abc, 5);
     }
-    console.log(this.abc);
   }
 
 }

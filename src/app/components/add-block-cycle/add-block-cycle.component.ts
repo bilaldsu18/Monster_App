@@ -79,7 +79,7 @@ export class AddBlockCycleComponent implements OnInit {
             "startDate": date,
             "blocks": this.addBlockCycleSendArr
         }
-        console.log(_body)
+        
 
 
         $(() => {
@@ -167,7 +167,7 @@ export class AddBlockCycleComponent implements OnInit {
 
                     setTimeout(() => {
                         for (let i = 0; i < this.checkedArray.length; ++i) {
-                            console.log(this.checkedArray.length)
+                           
                             let id = "#example" + i;
                             $(id).datepicker({
                                 autoclose: true,
@@ -179,12 +179,10 @@ export class AddBlockCycleComponent implements OnInit {
                 }
 
                 if (currentIndex === 2) {
-                    console.log(currentIndex);
                     for (let i = 0; i < this.checkedArray.length; ++i) {
                         let id = "#example" + i;
                         let date = $(id).val();
                         this.checkedArray[i].assignDate = date;
-                        console.log(this.checkedArray[i])
                     }
                 }
             }
