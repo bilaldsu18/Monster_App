@@ -45,7 +45,7 @@ export class BlocksComponent implements OnInit {
     $('#example2').datepicker({
       autoclose: true,
       todayHighlight: true,
-      format: 'mm/dd/yyyy'
+      format: 'dd/mm/yyyy'
     });
 
 
