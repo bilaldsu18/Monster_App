@@ -11,6 +11,9 @@ declare let $;
   styleUrls: ['./properties.component.css']
 })
 export class PropertiesComponent implements OnInit {
+  checked: boolean = true;
+  selectedIndex: any;
+  selectedDateIndex: string;
 
   propertyInfo: any;
 
@@ -26,6 +29,7 @@ export class PropertiesComponent implements OnInit {
   temp = 4;
   abc = 5;
   pop;
+  dates = [];
 
   ngOnInit() {
     this.componentInitData()
@@ -48,32 +52,67 @@ export class PropertiesComponent implements OnInit {
 
         this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + this.blockId + '&' + this.blockCycleId).subscribe(data => {
           this.propertyInfo = data.json();
-          
+
+          setTimeout(() => {
+            for (let i = 0; i < this.propertyInfo.length; ++i) {
+              let id = "#example" + i;
+              $(id).datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                format: 'dd/mm/yyyy'
+              }).on('show', (e) => {
+                
+              }).on('hide', (e) => {
+                if (this.checked) {
+                  $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
+                }
+                this.checked = true;
+
+
+              }).on('changeDate', (e) => {
+                this.checked = false;
+                this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val()
+
+              })
+
+
+              let abc: any = this.propertyInfo[i].nextInspectionDate;
+
+              let yy = abc.slice(0, 4);
+              let mm = abc.slice(5, 7);
+              let dd = abc.slice(8, 10);
+              let newDate = "" + dd + "/" + mm + "/" + yy;
+              this.dates.push({ id: newDate })
+              $(id).val(newDate);
+
+            }
+          })
+
         });
 
         this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/Get/' + this.blockCycleId)
           .map(res => res.json())
           .subscribe(data => {
-          
+
             this.blocksArray = data;
           });
       });
 
 
-      setTimeout(() => {
-        $(".footable").footable();
+    setTimeout(() => {
+      $(".footable").footable();
     }, 1000);
 
 
-      setTimeout(() => {
-        $('.footable-even').footable();
-      }, 100);
-    
+    setTimeout(() => {
+      $('.footable-even').footable();
+    }, 100);
 
-      setTimeout(() => {
-        $('.footable-page').footable();
-      }, 100);
-      
+
+    setTimeout(() => {
+      $('.footable-page').footable();
+    }, 100);
+
     // setTimeout(() => {
     //   $(".footable").footable();
     // }, 1000);
@@ -97,16 +136,16 @@ export class PropertiesComponent implements OnInit {
   // ==============================================================
 
   dataChanged(event) {
-    
+
 
     this.http.get('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/GetByBlockId/' + event.blockId + '&' + this.blockCycleId)
-    .map(data => data.json())
-    .subscribe(data => {
-      this.propertyInfo = data;    
-      this.makeHeighSmall = true;  
-      setTimeout(() => {
-        $('.footable-even').footable();
-      }, 1000);
+      .map(data => data.json())
+      .subscribe(data => {
+        this.propertyInfo = data;
+        this.makeHeighSmall = true;
+        setTimeout(() => {
+          $('.footable-even').footable();
+        }, 1000);
 
       });
 
@@ -116,16 +155,25 @@ export class PropertiesComponent implements OnInit {
   dropDownSize(event) {
     let value = "" + event;
     this.abc = event;
-    
+
     //$('#demo-foo-addrow').pageSize(10);
   }
 
 
   listChange(event) {
-    if(this.abc < this.propertyInfo.length) {
+    if (this.abc < this.propertyInfo.length) {
       this.abc += this.abc;
       this.propertyInfo.splice(this.abc, 5);
     }
+  }
+
+  dateInputSelection(index) {
+    
+    let id = "#example" + index;
+    this.selectedDateIndex = id;
+    this.selectedIndex = index;
+    
+
   }
 
 }

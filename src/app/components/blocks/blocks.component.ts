@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { query } from '@angular/core/src/animation/dsl';
 declare let $;
 
 @Component({
@@ -23,6 +24,10 @@ export class BlocksComponent implements OnInit {
   sub;
   blocksList;
   searchQuery;
+  dates = [];
+  selectedDateIndex: string;
+  selectedIndex: number;
+  checked: boolean = true;
   constructor(private http: Http, private router: Router, private route: ActivatedRoute) {
     this.title = "Blank Page title";
     this.subtitle = "This is some text within a card block."
@@ -66,17 +71,39 @@ export class BlocksComponent implements OnInit {
             setTimeout(() => {
               for (let i = 0; i < this.blocksArray.length; ++i) {
 
-                  let id = "#example" + i;
-                  $(id).datepicker({
-                      autoclose: true,
-                      todayHighlight: true,
-                      format: 'dd/mm/yyyy'
-                  })
-                    
-                  $(id).val(this.blocksArray[i].startDate);
+                let id = "#example" + i;
+                $(id).datepicker({
+                  autoclose: true,
+                  todayHighlight: true,
+                  format: 'dd/mm/yyyy'
+                }).on('show', (e) => {
+                  
+                }).on('hide', (e) => {
+                  
+                  if (this.checked) {
+                  
+                    $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
+                  }
+                  this.checked = true;
+
+
+                }).on('changeDate', (e) => {
+                  this.checked = false;
+                  this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val()
+
+                })
+
+                let abc: any = this.blocksArray[i].startDate;
+
+                let yy = abc.slice(0, 4);
+                let mm = abc.slice(5, 7);
+                let dd = abc.slice(8, 10);
+                let newDate = "" + dd + "/" + mm + "/" + yy;
+                this.dates.push({ id: newDate })
+                $(id).val(newDate);
 
               }
-          }, 100);
+            }, 100);
           });
 
 
@@ -131,7 +158,13 @@ export class BlocksComponent implements OnInit {
     this.router.navigate(['/properties'], { queryParams: { blockCycleId: this.blockCycleId, blockId: data.blockId } });
   }
 
+  temp(index) {
+    let id = "#example" + index;
+    this.selectedDateIndex = id;
+    this.selectedIndex = index;
+    //$(id).val(this.dates[index]);
 
+  }
 
   // ============================================================== 
   //            THIS FUCNTION WILL SEND DATA TO API

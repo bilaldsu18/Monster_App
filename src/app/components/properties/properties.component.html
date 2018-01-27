@@ -135,7 +135,15 @@
                     <td>{{i.comments}}</td>
 
                     <td>
-                        {{i.nextInspectionDate | date: 'dd/MM/yyyy'}}
+                        <!-- {{i.nextInspectionDate | date: 'dd/MM/yyyy'}} -->
+
+                        <div class="input-group" style="width:170px">
+                            <input type="text" name="i" [(ngModel)]="i.assignDate" class="form-control complex-colorpicker" [attr.id]="'example' + Index"
+                                placeholder="DD/MM/YYYY" (click)="dateInputSelection(Index)">
+                            <span class="input-group-addon">
+                                <i class="icon-calender"></i>
+                            </span>
+                        </div>
                     </td>
 
 
