@@ -107,14 +107,15 @@ export class AddBlockCycleComponent implements OnInit {
             })
 
 
-        for (let i = 0; i < this.checkedArray.length; ++i) {
+        for (let i = 0; i < this.blocksArray.length; ++i) {
+            console.log(i);
             let id = "#box-" + i;
             $(id).prop("checked", false);
         }
 
         this.tempCheckedArray = [];
         this.checkedArray = [];
-
+        this.step2datesRecord = [];
         this.testDate = "";
 
         setTimeout(() => {
