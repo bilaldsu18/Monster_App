@@ -27,6 +27,8 @@ export class AddBlockCycleComponent implements OnInit {
     date;
     body;
     arr = [];
+    step2datesRecord = [];
+    step2CurrentDateIndex;
 
     dateForm: FormGroup;
     testDate;
@@ -188,6 +190,11 @@ export class AddBlockCycleComponent implements OnInit {
                                 todayHighlight: true,
                                 format: 'dd/mm/yyyy'
                             })
+                                .on('changeDate', (e) => {
+                                    this.step2datesRecord[this.step2CurrentDateIndex] = $(`#example${this.step2CurrentDateIndex}`).val()
+                                })
+
+                            $(id).val(this.step2datesRecord[i])
                         }
                     }, 100);
                 }
@@ -229,6 +236,14 @@ export class AddBlockCycleComponent implements OnInit {
             this.checkedArray.push(a);
 
         }
+    }
+
+    //============================================================== 
+    // STEPER SECTION 2 DATE SELECTION
+    // ==============================================================
+
+    selectDate(index) {
+        this.step2CurrentDateIndex = index;
     }
 
 
