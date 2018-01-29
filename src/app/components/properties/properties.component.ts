@@ -1,6 +1,5 @@
-import { RequestOptions } from '@angular/http';
 import { Component, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 declare let $;
@@ -61,7 +60,7 @@ export class PropertiesComponent implements OnInit {
                 todayHighlight: true,
                 format: 'dd/mm/yyyy'
               }).on('show', (e) => {
-                
+
               }).on('hide', (e) => {
                 if (this.checked) {
                   $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
@@ -71,7 +70,9 @@ export class PropertiesComponent implements OnInit {
 
               }).on('changeDate', (e) => {
                 this.checked = false;
-                this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val()
+                this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val();
+                let data = $(`#example${this.selectedIndex}`).val();
+                this.sendDate(data);
 
               })
 
@@ -167,13 +168,45 @@ export class PropertiesComponent implements OnInit {
     }
   }
 
+
+  // ============================================================== 
+  // THIS FUNCTION WILL ASSIGN THE INDEX OF DATEPICKER WHICH WE CLICK
+  // ==============================================================
+
+
   dateInputSelection(index) {
-    
+
     let id = "#example" + index;
     this.selectedDateIndex = id;
     this.selectedIndex = index;
-    
 
+  }
+
+
+
+  // ============================================================== 
+  // THIS FUNCTION WILL SEND THE PUT REQUEST
+  // ==============================================================
+
+
+  sendDate(date) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+
+    let url = "http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Properties/UpdateBlockCycleProperty";
+
+    let dd = date.slice(0, 2);
+    let mm = date.slice(3, 5);
+    let yy = date.slice(6, 10);
+    let newDate = "" + mm + "/" + dd + "/" + yy;
+
+    this.propertyInfo[this.selectedIndex].nextInspectionDate = newDate;
+
+    let body = JSON.stringify(this.propertyInfo[this.selectedIndex]);
+    console.log(body);
+
+    this.http.put(url, body, options).map(res => res.json());
   }
 
 }

@@ -46,7 +46,7 @@ export class BlocksComponent implements OnInit {
   // ==============================================================
 
   componentInitData() {
-    $('#example2').datepicker({
+    $('#exampl2').datepicker({
       autoclose: true,
       todayHighlight: true,
       format: 'dd/mm/yyyy'
@@ -77,11 +77,11 @@ export class BlocksComponent implements OnInit {
                   todayHighlight: true,
                   format: 'dd/mm/yyyy'
                 }).on('show', (e) => {
-                  
+
                 }).on('hide', (e) => {
-                  
+
                   if (this.checked) {
-                  
+
                     $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
                   }
                   this.checked = true;
@@ -173,8 +173,9 @@ export class BlocksComponent implements OnInit {
 
 
   save() {
-    let date = $("#example2").val();
 
+    let date = $("#exampl2").val();
+    let url = "http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle";
     let headers = new Headers();
     headers.append('Content-Type', 'application/json')
     let options = new RequestOptions({ headers: headers });
@@ -187,18 +188,24 @@ export class BlocksComponent implements OnInit {
     // const requestOptions = {
     //   headers: new Headers(headerDict),
     // };
+
+
+    let dd = date.slice(0, 2);
+    let mm = date.slice(3, 5);
+    let yy = date.slice(6, 10);
+    let newDate = "" + mm + "/" + dd + "/" + yy;
+
     let _body = {
       "blockCycleId": this.blockCycleId,
       "blockId": this.dropDownValue.blockId,
-      "startDate": date
+      "startDate": newDate
     }
 
     let body = JSON.stringify(_body);
 
-    this.http.post("http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/Blocks/AddBlockToBlockCycle", body, options)
+    this.http.post(url, body, options)
       .map(res => res.json())
       .subscribe(data => {
-
       })
 
   }

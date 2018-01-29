@@ -68,15 +68,13 @@ export class AddBlockCycleComponent implements OnInit {
                 blockCycleId: this.checkedArray[i].blockCycleId,
                 blockId: this.checkedArray[i].blockId,
                 startDate: this.checkedArray[i].assignDate,
-
             }
             this.addBlockCycleSendArr.push(tempDataHolder)
 
         }
 
         let date = $("#datepicker-autoclose").val();
-
-
+        console.log(date);
         let _body = {
             "startDate": date,
             "blocks": this.addBlockCycleSendArr
@@ -108,13 +106,12 @@ export class AddBlockCycleComponent implements OnInit {
 
 
         for (let i = 0; i < this.blocksArray.length; ++i) {
-            console.log(i);
             let id = "#box-" + i;
             $(id).prop("checked", false);
         }
 
         this.tempCheckedArray = [];
-        this.checkedArray = [];
+        this.checkedArray     = [];
         this.step2datesRecord = [];
         this.testDate = "";
 
@@ -231,6 +228,7 @@ export class AddBlockCycleComponent implements OnInit {
         if (index > -1) {
             this.tempCheckedArray.splice(index, 1);
             this.checkedArray.splice(index, 1);
+            this.step2datesRecord.splice(index, 1);
         } else {
             let a = Object.assign({ assignDate: "" }, this.blocksArray[Index]);
             this.tempCheckedArray.push(this.blocksArray[Index].blockId);
