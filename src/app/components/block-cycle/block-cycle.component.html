@@ -43,7 +43,7 @@
                                 </td>
 
                                 <div *ngIf="blockCycles">
-                                    <app-add-block-cycle [blockCycles]="blockCycles"></app-add-block-cycle>
+                                    <app-add-block-cycle (update)="componentInitData()" [blockCycles]="blockCycles"></app-add-block-cycle>
                                 </div>
 
                                 <td colspan="7">

@@ -17,6 +17,7 @@ declare let $;
 export class AddBlockCycleComponent implements OnInit {
 
     @Input('blockCycles') blockCycles: any;
+    @Output() update = new EventEmitter<any>();
 
     tempArr = [];
     blocksArray: any = [];
@@ -95,9 +96,9 @@ export class AddBlockCycleComponent implements OnInit {
             "blocks": this.addBlockCycleSendArr
         }
 
-        console.log(_body);
+        //console.log(_body);
         let body = JSON.stringify(_body);
-        console.log(body);
+        //console.log(body);
         
         $(() => {
             $('#add-contact').modal('toggle');
@@ -115,10 +116,11 @@ export class AddBlockCycleComponent implements OnInit {
         this.http.post(url, body, options)
 
             .subscribe(val => {
-                console.log(val);
+                //console.log(val);
+                this.update.emit();
             },
             response => {
-                console.log(response);
+                //console.log(response);
             },
             () => {
             })

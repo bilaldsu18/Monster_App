@@ -143,6 +143,44 @@ export class PropertiesComponent implements OnInit {
       .map(data => data.json())
       .subscribe(data => {
         this.propertyInfo = data;
+        
+        setTimeout(() => {
+          for (let i = 0; i < this.propertyInfo.length; ++i) {
+            let id = "#example" + i;
+            $(id).datepicker({
+              autoclose: true,
+              todayHighlight: true,
+              format: 'dd/mm/yyyy'
+            }).on('show', (e) => {
+
+            }).on('hide', (e) => {
+              if (this.checked) {
+                $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
+              }
+              this.checked = true;
+
+
+            }).on('changeDate', (e) => {
+              this.checked = false;
+              this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val();
+              let data = $(`#example${this.selectedIndex}`).val();
+              this.sendDate(data);
+
+            })
+
+
+            let abc: any = this.propertyInfo[i].nextInspectionDate;
+
+            let yy = abc.slice(0, 4);
+            let mm = abc.slice(5, 7);
+            let dd = abc.slice(8, 10);
+            let newDate = "" + dd + "/" + mm + "/" + yy;
+            this.dates.push({ id: newDate })
+            $(id).val(newDate);
+
+          }
+        })
+        
         this.makeHeighSmall = true;
         setTimeout(() => {
           $('.footable-even').footable();
@@ -209,9 +247,53 @@ export class PropertiesComponent implements OnInit {
     this.http.put(url, body, options)
       .map(res => res.json())
       .subscribe(data => {
-        console.log(data);
+        //console.log(data);
       })
 
+  }
+
+  searchQueryMethod() { 
+    setTimeout(() => {
+      for (let i = 0; i < this.propertyInfo.length; ++i) {
+        let id = "#example" + i;
+        $(id).datepicker({
+          autoclose: true,
+          todayHighlight: true,
+          format: 'dd/mm/yyyy'
+        }).on('show', (e) => {
+
+        }).on('hide', (e) => {
+          if (this.checked) {
+            $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
+          }
+          this.checked = true;
+
+
+        }).on('changeDate', (e) => {
+          this.checked = false;
+          this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val();
+          let data = $(`#example${this.selectedIndex}`).val();
+          this.sendDate(data);
+
+        })
+
+
+        let abc: any = this.propertyInfo[i].nextInspectionDate;
+
+        let yy = abc.slice(0, 4);
+        let mm = abc.slice(5, 7);
+        let dd = abc.slice(8, 10);
+        let newDate = "" + dd + "/" + mm + "/" + yy;
+        this.dates.push({ id: newDate })
+        $(id).val(newDate);
+
+      }
+    })
+
+    setTimeout(() => {
+      $('.footable-even').footable();
+    }, 1000);
+    
   }
 
 }

@@ -209,9 +209,59 @@ export class BlocksComponent implements OnInit {
         //console.log(data);
         //this.blocksArray.push(data)
         this.componentInitData();
+        $('exampl2').datepicker({
+          autoclose: true,
+          todayHighlight: true,
+          format: 'dd/mm/yyyy'
+        })
         
       })
 
+  }
+
+  searchQueryMethod() {
+
+
+    setTimeout(() => {
+      for (let i = 0; i < this.blocksArray.length; ++i) {
+
+        let id = "#example" + i;
+        $(id).datepicker({
+          autoclose: true,
+          todayHighlight: true,
+          format: 'dd/mm/yyyy'
+        }).on('show', (e) => {
+
+        }).on('hide', (e) => {
+
+          if (this.checked) {
+
+            $(`#example${this.selectedIndex}`).val(this.dates[this.selectedIndex].id)
+          }
+          this.checked = true;
+
+
+        }).on('changeDate', (e) => {
+          this.checked = false;
+          this.dates[this.selectedIndex].id = $(`#example${this.selectedIndex}`).val()
+
+        })
+
+        let abc: any = this.blocksArray[i].startDate;
+
+        let yy = abc.slice(0, 4);
+        let mm = abc.slice(5, 7);
+        let dd = abc.slice(8, 10);
+        let newDate = "" + dd + "/" + mm + "/" + yy;
+        this.dates.push({ id: newDate })
+        $(id).val(newDate);
+
+      }
+    });
+
+    setTimeout(() => {
+      $('.footable-even').footable();
+    }, 1000);
   }
 
 
