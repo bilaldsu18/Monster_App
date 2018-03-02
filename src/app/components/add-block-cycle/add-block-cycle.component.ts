@@ -69,37 +69,56 @@ export class AddBlockCycleComponent implements OnInit {
                 blockId: this.checkedArray[i].blockId,
                 startDate: this.checkedArray[i].assignDate,
             }
+            let dd = tempDataHolder.startDate.slice(0, 2);
+            let mm = tempDataHolder.startDate.slice(3, 5);
+            let yy = tempDataHolder.startDate.slice(6, 10);
+            let newDate = "" + mm + "/" + dd + "/" + yy;
+
+            tempDataHolder.startDate = newDate;
             this.addBlockCycleSendArr.push(tempDataHolder)
 
         }
 
         let date = $("#datepicker-autoclose").val();
-        console.log(date);
+        let dd = date.slice(0, 2);
+        let mm = date.slice(3, 5);
+        let yy = date.slice(6, 10);
+        let newDate = "" + mm + "/" + dd + "/" + yy;
+
+        //let tempDate = new Date(date);
+        //console.log(tempDate instanceof Date);
+        //tempDate.toISOString();
+        //console.log(tempDate);
         let _body = {
-            "startDate": date,
+            //"startDate": date,
+            "startDate": newDate,
             "blocks": this.addBlockCycleSendArr
         }
 
-
-
+        console.log(_body);
+        let body = JSON.stringify(_body);
+        console.log(body);
+        
         $(() => {
             $('#add-contact').modal('toggle');
         });
 
 
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json') // ... Set content type to JSON
-        let options = new RequestOptions({ method: RequestMethod.Post, headers: headers }); // Create a request option
+        //  let headers = new Headers();
+        // headers.append('Content-Type', 'application/json') // ... Set content type to JSON
+        // let options = new RequestOptions({ method: RequestMethod.Post, headers: headers }); // Create a request option
 
-        this.http.post('http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Add', {
-            "startDate": date,
-            "blocks": this.addBlockCycleSendArr
-        }, options)
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json')
+        let options = new RequestOptions({ headers: headers });
+        let url = 'http://kybodev01.northeurope.cloudapp.azure.com/PestInspections/api/BlockCycle/Add';
+        this.http.post(url, body, options)
 
             .subscribe(val => {
-
+                console.log(val);
             },
             response => {
+                console.log(response);
             },
             () => {
             })
@@ -111,7 +130,7 @@ export class AddBlockCycleComponent implements OnInit {
         }
 
         this.tempCheckedArray = [];
-        this.checkedArray     = [];
+        this.checkedArray = [];
         this.step2datesRecord = [];
         this.testDate = "";
 

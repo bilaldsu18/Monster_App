@@ -206,6 +206,10 @@ export class BlocksComponent implements OnInit {
     this.http.post(url, body, options)
       .map(res => res.json())
       .subscribe(data => {
+        //console.log(data);
+        //this.blocksArray.push(data)
+        this.componentInitData();
+        
       })
 
   }

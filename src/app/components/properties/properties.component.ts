@@ -204,9 +204,14 @@ export class PropertiesComponent implements OnInit {
     this.propertyInfo[this.selectedIndex].nextInspectionDate = newDate;
 
     let body = JSON.stringify(this.propertyInfo[this.selectedIndex]);
-    console.log(body);
+   
 
-    this.http.put(url, body, options).map(res => res.json());
+    this.http.put(url, body, options)
+      .map(res => res.json())
+      .subscribe(data => {
+        console.log(data);
+      })
+
   }
 
 }
